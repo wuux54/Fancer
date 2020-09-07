@@ -1,0 +1,16 @@
+rootProject.name='Fancer'
+include ':app'
+include ':moduleConfig'
+include ':modulePlayer'
+include ':moduleBase'
+
+
+include ':ijkplayer-arm64'
+include ':ijkplayer-armv7a'
+include ':ijkplayer-armv5'
+include ':ijkplayer-x86'
+include ':ijkplayer-x86_64'
+include ':ijkplayer-exo'
+include ':ijkplayer-java'
+include ':moduleread'
+include ':moduleRead'

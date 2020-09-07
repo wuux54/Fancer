@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.fancer.mvvm.vm.ky.KyMainVm" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_mainContainer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/nav_bottomView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/nav_bottomView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_goneMarginBottom="@dimen/dp_0"
+            android:background="@color/white"
+            android:layout_marginBottom="0dp"
+            android:orientation="vertical"
+            app:itemIconSize="@dimen/dp_20"
+            app:itemIconTint="@null"
+            android:paddingBottom="@dimen/dp_0"
+            app:itemRippleColor="@color/green"
+            app:itemTextAppearanceActive="@style/Active"
+            app:itemTextAppearanceInactive="@style/Inactive"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vp_mainContainer"
+            app:menu="@menu/menu_bottom" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

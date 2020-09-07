@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tipsLoadProgress">正在加载</string>
+    <string name="tipsLoadFail">加载失败</string>
+    <string name="tipsLoadSuccess">加载成功</string>
+</resources>

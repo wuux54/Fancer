@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="image_default_color">#F0F0F0</color>
+    <color name="image_default_gray_color">#D6DCDE</color>
+
+    <color name="text_blake_99000000">#99000000</color>
+
+    <color name="black_B0000000">#B0000000</color>
+    <!--normal color-->
+    <color name="transparent">#00000000</color>
+    <color name="white">#FFFFFF</color>
+</resources>

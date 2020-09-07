@@ -1,0 +1,18 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="seekBarVideo">
+        <item name="android:thumb">@drawable/sb_thumb</item>
+        <item name="android:progressDrawable">@drawable/progress_video</item>
+        <!--  去掉thumb 背景白色  -->
+        <item name="android:splitTrack">false</item>
+    </style>
+</resources>

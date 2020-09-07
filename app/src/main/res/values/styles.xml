@@ -1,0 +1,93 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
+    <style name="DialogLoadStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!--边框-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">false</item>
+        <!--半透明-->
+        <item name="android:windowNoTitle">true</item>
+        <!--无标题-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--背景透明-->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!--模糊-->
+    </style>
+
+
+    <!-- 设置Toolbar标题字体的大小 -->
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="Toolbar.TitleText2" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="AppThemeNoAction" parent="AppTheme">
+        <item name="android:windowFullscreen">false</item>
+    </style>
+
+    <style name="myToolbarNavigationButtonStyle" parent="@style/Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="android:width">@dimen/dp_35</item>
+        <item name="android:height">@dimen/dp_20</item>
+        <item name="android:maxWidth">@dimen/dp_35</item>
+        <item name="android:maxHeight">@dimen/dp_20</item>
+        <item name="android:minWidth">@dimen/dp_35</item>
+        <item name="android:minHeight">@dimen/dp_20</item>
+
+        <item name="android:padding">@dimen/dp_0</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:layout_marginEnd">0dp</item>
+        <item name="android:layout_margin">0dp</item>
+    </style>
+
+    <style name="myToolbarStyle" parent="@style/Widget.AppCompat.Toolbar">
+        <item name="titleMargin">0dp</item>
+        <item name="buttonGravity">center_vertical</item>
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetEnd">@dimen/dp_35</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="android:paddingLeft">@dimen/dp_10</item>
+        <item name="android:paddingRight">@dimen/dp_10</item>
+    </style>
+
+    <style name="AppTheme2" parent="AppTheme">
+        <item name="toolbarStyle">@style/myToolbarStyle</item>
+        <item name="toolbarNavigationButtonStyle">@style/myToolbarNavigationButtonStyle</item>
+        <!--        <item name="popupMenuStyle">@style/ThemeOverlay.AppCompat.Light</item>-->
+    </style>
+
+    <style name="Active" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">@dimen/sp_13</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Inactive" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">@dimen/sp_11</item>
+        <item name="android:textColor">@color/grey</item>
+    </style>
+</resources>

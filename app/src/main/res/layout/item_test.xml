@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="itemTest"
+            type="com.fancer.demo.TestViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:background="@color/colorPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="北京111111111111111111111" />
+        <TextView
+            android:background="@color/colorAccent"
+            android:layout_gravity="top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{@string/app_name + itemTest.text}'/>
+    </FrameLayout>
+
+</layout>

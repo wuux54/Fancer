@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	
+	<!--Common-->
+	<style name="NB_Theme_TextAppearance_Common"/>
+	<style name="NB_Theme_TextAppearance_Common_SingleLine">
+		<item name="android:singleLine">true</item>
+		<item name="android:maxLines">1</item>
+		<item name="android:ellipsize">end</item>
+	</style>
+	
+	<!--表示领域-->
+	<style name="NB_Theme_TextAppearance_Billboard"/>
+	<style name="NB_Theme_TextAppearance_Billboard_Title">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:padding">10dp</item>
+		<item name="android:textColor">@color/nb_text_default</item>
+		<item name="android:textSize">@dimen/nb_text_large</item>
+	</style>
+	
+	<!--书籍-->
+	<style name="NB_Theme_TextAppearance_Book"/>
+	<style name="NB_Theme_TextAppearance_Book_Name">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:ellipsize">end</item>
+		<item name="android:singleLine">true</item>
+		<item name="android:textColor">@color/nb_text_default</item>
+		<item name="android:textSize">16sp</item>
+	</style>
+	
+	<!--ReadActivity-->
+	<style name="NB_Theme_TextAppearance_Read"></style>
+	<style name="NB_Theme_TextAppearance_Read_TopMenu">
+		<item name="android:layout_width">50dp</item>
+		<item name="android:layout_height">match_parent</item>
+		<item name="android:gravity">center</item>
+		<item name="android:textColor">@color/nb_read_menu_text</item>
+		<item name="android:textSize">@dimen/nb_read_text_top</item>
+	</style>
+	<style name="NB_Theme_TextAppearance_Read_BottomMenu">
+		<item name="android:textColor">@color/nb_read_menu_text</item>
+		<item name="android:textSize">@dimen/nb_read_text_bottom</item>
+	</style>
+	
+	
+	<style name="NB_Theme_TextAppearance_Read_BottomMenu_Button"
+		parent="NB_Theme_TextAppearance_Read_BottomMenu">
+		<item name="android:gravity">center_horizontal|bottom</item>
+		<item name="android:layout_width">0dp</item>
+		<item name="android:layout_height">match_parent</item>
+		<item name="android:layout_weight">1</item>
+	</style>
+	
+	
+	<style name="NB_Theme_TextAppearance_File"/>
+	<style name="NB_Theme_TextAppearance_File_Tag">
+		<item name="android:layout_width">38dp</item>
+		<item name="android:layout_height">18dp</item>
+		<item name="android:textSize">12sp</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:gravity">center</item>
+	</style>
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <color name="image_default_color">#F0F0F0</color>
+    <color name="image_default_gray_color">#D6DCDE</color>
+
+    <color name="text_blake_99000000">#99000000</color>
+
+    <color name="black_B0000000">#B0000000</color>
+    <!--normal color-->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="grey">#C2C1C1</color>
+    <color name="red">#FF0000</color>
+    <color name="green">#00FF00</color>
+    <color name="blue">#0000FF</color>
+</resources>

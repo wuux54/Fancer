@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_ky_home"
+        android:iconTint="@null"
+        android:icon="@drawable/selector_ky_home"
+        android:title="@string/home" />
+
+    <item
+        android:id="@+id/menu_ky_media"
+        android:iconTint="@null"
+        android:icon="@drawable/selector_ky_media"
+        android:title="@string/media" />
+
+    <item
+        android:id="@+id/menu_ky_follow"
+        android:iconTint="@null"
+        android:icon="@drawable/selector_ky_follow"
+        android:title="@string/follow" />
+</menu>

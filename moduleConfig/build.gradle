@@ -1,0 +1,107 @@
+//根据isModule标签动态的切换 集成/组件模式
+//if (isModule){
+apply plugin: 'com.android.library'
+//}else{
+//    apply plugin: 'com.android.application'
+//}
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+def cfg = rootProject.ext
+
+
+android {
+    compileSdkVersion cfg.defConfig.compileSdkVersion
+    buildToolsVersion cfg.defConfig.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion cfg.defConfig.minSdkVersion
+        targetSdkVersion cfg.defConfig.targetSdkVersion
+        versionCode cfg.defConfig.versionCode
+        versionName cfg.defConfig.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+
+//        if (!isModule){
+//            applicationId cfg.appId['moduleBase']
+//        }
+
+    }
+
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+    dataBinding {
+        enabled = true
+    }
+
+
+    sourceSets {
+        main {
+            //在组件模式下 使用不同的manifest文件
+//            if(!isModule){
+//               manifest.srcFile 'src/main/AndroidManifest.xml'
+//                java.srcDirs 'src/main/java'
+//            }else{
+            manifest.srcFile 'src/main/module/AndroidManifest.xml'
+//            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.3.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    def configAppDependencies = cfg.appDependencies
+    implementation configAppDependencies.dagger2
+    kapt configAppDependencies.daggerComiler
+    implementation configAppDependencies.rxJava
+    implementation configAppDependencies.rxAndroid
+    implementation configAppDependencies.rxBinding
+    implementation configAppDependencies.retrofit
+    implementation configAppDependencies.retrofitAdapter
+    implementation configAppDependencies.retrofitKotlinAdapter
+    implementation configAppDependencies.retrofitConverter
+    implementation configAppDependencies.retrofitLogger
+    implementation configAppDependencies.multiDex
+    implementation configAppDependencies.glide
+    implementation configAppDependencies.glideOkhttp
+    implementation configAppDependencies.vlayout
+    implementation configAppDependencies.XTabLayout
+    implementation configAppDependencies.constraintlayout
+    implementation configAppDependencies.coordinatorlayout
+    implementation configAppDependencies.lifecycleLivedata
+    implementation configAppDependencies.lifecycleViewmodel
+    implementation configAppDependencies.material
+    implementation configAppDependencies.navigationFragment
+    implementation configAppDependencies.navigationUi
+    implementation configAppDependencies.navigationFragmentKtx
+    implementation configAppDependencies.navigationFragmentUiKtx
+    implementation configAppDependencies.navigationDynamic
+    androidTestImplementation configAppDependencies.navigationTesting
+    implementation configAppDependencies.autoDisposableKtx
+    implementation configAppDependencies.autoDisposableAndroidKtx
+    implementation configAppDependencies.autoArchcomponentsKtx
+    implementation configAppDependencies.paging
+    implementation configAppDependencies.SmartRefreshLayout
+    implementation configAppDependencies.SmartRefreshHeader
+    implementation configAppDependencies.SmartRefreshFooter
+    implementation configAppDependencies.WxPermissionUtils
+
+    implementation files('libs/pinyin4j-2.5.0.jar')
+}

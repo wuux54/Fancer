@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.fancer.mvvm.vm.ky.KyHomeVm" />
+
+        <variable
+            name="clickProxy"
+            type="com.fancer.mvvm.ui.fragment.ky.KyHomeFragment" />
+
+    </data>
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableAutoLoadMore="true"
+        app:srlEnableLoadMore="true"
+        app:srlEnableOverScrollBounce="false"
+        app:srlEnableRefresh="true">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_200"
+                android:background="@color/white">
+
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:collapsedTitleGravity="center|center_horizontal"
+                    app:collapsedTitleTextAppearance="@style/Toolbar.TitleText2"
+                    app:contentScrim="@color/black_B0000000"
+                    app:expandedTitleGravity="left|bottom"
+                    app:expandedTitleTextAppearance="@style/Toolbar.TitleText"
+                    app:layout_scrollFlags="scroll|enterAlwaysCollapsed|exitUntilCollapsed"
+                    app:titleEnabled="true">
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/itemImgBg"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/bg1" />
+
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:gravity="center"
+                        app:layout_collapseMode="pin"
+                        app:title="@string/ky_app_name"
+                        android:background="@color/transparent"
+                        app:contentInsetStartWithNavigation="@dimen/dp_0"
+                        app:contentInsetLeft="@dimen/dp_0"
+                        app:contentInsetStart="@dimen/dp_0"
+                        app:titleMargin="@dimen/dp_0"
+                        app:titleMarginStart="@dimen/dp_0"
+                        app:theme="@style/AppTheme2"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        app:collapseIcon="@drawable/back_white_normal"
+                        android:navigationIcon="@drawable/back_white_normal"
+                        app:navigationIcon="@drawable/back_white_normal"
+                        app:titleTextAppearance="@style/Toolbar.TitleText" />
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+</layout>

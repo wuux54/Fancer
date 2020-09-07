@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Fancer</string>
+
+    <string name="ky_app_name">开眼</string>
+    <string name="follow">关注</string>
+    <string name="media">媒体</string>
+    <string name="home">主页</string>
+
+    <string name="tipsLoadProgress">正在加载</string>
+    <string name="tipsLoadFail">加载失败</string>
+    <string name="tipsLoadSuccess">加载成功</string>
+
+    <string name="itemImgBg">条目背景图</string>
+</resources>

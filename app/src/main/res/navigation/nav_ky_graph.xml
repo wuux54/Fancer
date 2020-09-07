@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/kyMainFragment">
+    <fragment
+        android:id="@+id/kyMainFragment"
+        android:name="com.fancer.mvvm.ui.fragment.ky.KyMainFragment"
+        android:label="fragmentKyMain"
+        tools:layout="@layout/fragment_ky_main">
+        <action
+            android:id="@+id/action_ky_mainFragment_to_homeFragment"
+            app:destination="@+id/kyHomeFragment" />
+
+
+        <action
+            android:id="@+id/action_ky_homeFragment_to_videoFragment"
+            app:destination="@+id/kyVideoFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/kyHomeFragment"
+        android:name="com.fancer.mvvm.ui.fragment.ky.KyHomeFragment"
+        android:label="kyHomeFragment"
+        tools:layout="@layout/fragment_ky_home" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/kyVideoFragment"
+        android:name="com.fancer.mvvm.ui.fragment.ky.KyVideoFragment"
+        android:label="KyVideoFragment"
+        tools:layout="@layout/fragment_ky_video" />
+</navigation>
