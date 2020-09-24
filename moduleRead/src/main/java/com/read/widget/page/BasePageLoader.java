@@ -13,10 +13,10 @@ import android.text.TextPaint;
 import androidx.core.content.ContextCompat;
 
 import com.read.Constant;
-import com.read.bean.BookRecordBean;
-import com.read.bean.CollBookBean;
+import com.read.bean.BookBean;
 import com.read.bean.TxtChapterBean;
 import com.read.bean.TxtDrawBean;
+import com.read.callback.ItfBookEventCallback;
 import com.read.local.ReadSettingManager;
 import com.read.utils.StringUtils;
 
@@ -60,7 +60,7 @@ public abstract class BasePageLoader {
     // 当前章节列表
     protected List<TxtChapterBean> mChapterList;
     // 书本对象
-    protected CollBookBean mCollBook;
+    protected BookBean mCollBook;
     // 监听器
     protected OnPageChangeListener mPageChangeListener;
 
@@ -90,14 +90,12 @@ public abstract class BasePageLoader {
     private ReadSettingManager mSettingManager;
     // 被遮盖的页，或者认为被取消显示的页
     private TxtDrawBean mCancelPage;
-    // 存储阅读记录类
-    private BookRecordBean mBookRecord;
 
     private Disposable mPreLoadDisp;
 
     /*****************params**************************/
     // 当前的状态
-    protected int mStatus = STATUS_FINISH;
+    protected int mStatus = STATUS_LOADING;
     // 判断章节列表是否加载完成
     protected boolean isChapterListPrepare;
 
@@ -144,7 +142,7 @@ public abstract class BasePageLoader {
     private int mLastChapterPos = 0;
 
     /*****************************init params*******************************/
-    public BasePageLoader(PageView pageView, CollBookBean collBook) {
+    public BasePageLoader(PageView pageView, BookBean collBook) {
         mPageView = pageView;
         mContext = pageView.getContext();
         mCollBook = collBook;
@@ -171,45 +169,6 @@ public abstract class BasePageLoader {
         mMarginHeight = DensityUtils.dp2px(mContext, DEFAULT_MARGIN_HEIGHT);
         // 配置文字有关的参数
         setUpTextParams(mSettingManager.getTextSize(mContext));
-
-
-        mPrePageList = new ArrayList<>();
-        mCurPageList = new ArrayList<>();
-        mNextPageList = new ArrayList<>();
-
-        for (int i = 0; i < 10; i++) {
-            TxtDrawBean mCurPage = new TxtDrawBean();
-            List<String> l = new ArrayList<>();
-            l.add("dfsdfsfdd");
-            l.add("dfsdfsfdd");
-            l.add("dfsdfsfdd");
-            l.add("dfsdfsfdasdddddddddddddddddddddddd");
-            l.add("dfsdfsfdd");
-            l.add("dfsdfsfdd");
-            l.add("dfsdfsdsaddddddddddddddddddddddddfdd");
-            l.add("dfsdfsfdd");
-            l.add("dfsdfsfdd");
-            l.add("dfsdfsfdd");
-            l.add("dfsdfsfdd");
-            l.add("dfsdfsfdd");
-            l.add("dfsdfsfdd");
-            l.add("dfsdfsfdd");
-            l.add("dfsdfsfdd");
-            l.add("dfsdfsfdd");
-            l.add("dfsdfsfdd");
-            l.add("dfsdfsfdd");
-            mCurPage = new TxtDrawBean();
-            mCurPage.lines = l;
-            mCurPage.position = 2;
-            mCurPage.title = "ttt";
-            mCurPage.titleLines = 1;
-
-            mPrePageList.add(mCurPage);
-            mCurPageList.add(mCurPage);
-            mNextPageList.add(mCurPage);
-        }
-
-        mCurPage = mCurPageList.get(0);
     }
 
 
@@ -545,7 +504,7 @@ public abstract class BasePageLoader {
      *
      * @return
      */
-    public CollBookBean getCollBook() {
+    public BookBean getCollBook() {
         return mCollBook;
     }
 
@@ -594,32 +553,28 @@ public abstract class BasePageLoader {
             return;
         }
 
-        mBookRecord.setBookId(mCollBook.get_id());
-        mBookRecord.setChapter(mCurChapterPos);
+        mCollBook.setChapter(mCurChapterPos);
 
         if (mCurPage != null) {
-            mBookRecord.setPagePos(mCurPage.position);
+            mCollBook.setPagePos(mCurPage.position);
         } else {
-            mBookRecord.setPagePos(0);
+            mCollBook.setPagePos(0);
         }
 
         //存储到数据库
-//        BookRepository.getInstance()
-//                .saveBookRecord(mBookRecord);
+        bookEventCallback.saveBookBean(mCollBook);
     }
 
     /**
      * 初始化书籍
      */
     private void prepareBook() {
-//        mBookRecord = BookRepository.getInstance()
-//                .getBookRecord(mCollBook.get_id());
-
-        if (mBookRecord == null) {
-            mBookRecord = new BookRecordBean();
-        }
-
-        mCurChapterPos = mBookRecord.getChapter();
+//        mBookRecord = bookEventCallback.getReadRecord(mCollBook.get_id());
+//
+//        if (mBookRecord == null) {
+//            mBookRecord = new BookRecordBean();
+//        }
+        mCurChapterPos = mCollBook.getChapter();
         mLastChapterPos = mCurChapterPos;
     }
 
@@ -650,7 +605,7 @@ public abstract class BasePageLoader {
         if (parseCurChapter()) {
             // 如果章节从未打开
             if (!isChapterOpen) {
-                int position = mBookRecord.getPagePos();
+                int position = mCollBook.getPagePos();
 
                 // 防止记录页的页号，大于当前最大页号
                 if (position >= mCurPageList.size()) {
@@ -727,9 +682,7 @@ public abstract class BasePageLoader {
         }
         // 获取章节的文本流
         BufferedReader reader = getChapterReader(chapter);
-        List<TxtDrawBean> chapters = loadPages(chapter, reader);
-
-        return chapters;
+        return loadPages(chapter, reader);
     }
 
     /*******************************abstract method***************************************/
@@ -1289,7 +1242,7 @@ public abstract class BasePageLoader {
                 if (!showTitle) {
                     paragraph = paragraph.replaceAll("\\s", "");
                     // 如果只有换行符，那么就不执行
-                    if (paragraph.equals("")) continue;
+                    if (paragraph.equals("")){ continue;}
                     paragraph = StringUtils.halfToFull("  " + paragraph + "\n");
                 } else {
                     //设置 title 的顶部间距
@@ -1451,6 +1404,12 @@ public abstract class BasePageLoader {
         return true;
     }
 
+
+   protected ItfBookEventCallback bookEventCallback;
+
+    public void setListener( ItfBookEventCallback bookEventCallback){
+        this.bookEventCallback = bookEventCallback;
+    }
     /*****************************************interface*****************************************/
 
     public interface OnPageChangeListener {

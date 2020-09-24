@@ -34,19 +34,27 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.appbar.AppBarLayout;
-import com.read.bean.BookChapterBean;
-import com.read.bean.CollBookBean;
+import com.google.gson.Gson;
+import com.read.bean.BookBean;
 import com.read.bean.TxtChapterBean;
+import com.read.bean.ddd;
 import com.read.local.ReadSettingManager;
 import com.read.ui.dialog.ReadSettingDialog;
+import com.read.utils.BookManager;
 import com.read.utils.StringUtils;
 import com.read.widget.page.BasePageLoader;
 import com.read.widget.page.PageView;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
 import app.util.BrightnessUtils;
+import app.util.IOUtils;
 import app.util.LogUtils;
 import app.util.ScreenUtils;
 import app.util.SystemBarUtils;
@@ -106,7 +114,7 @@ public class ReadActivity extends AppCompatActivity {
     private Animation mBottomInAnim;
     private Animation mBottomOutAnim;
     //    private CategoryAdapter mCategoryAdapter;
-    private CollBookBean mCollBook;
+    private BookBean mCollBook;
     //控制屏幕常亮
     private PowerManager.WakeLock mWakeLock;
     private Handler mHandler = new Handler() {
@@ -180,7 +188,7 @@ public class ReadActivity extends AppCompatActivity {
     private String mBookId;
     private Toolbar toolbar;
 
-    public static void startActivity(Context context, CollBookBean collBook, boolean isCollected) {
+    public static void startActivity(Context context, BookBean collBook, boolean isCollected) {
         context.startActivity(new Intent(context, ReadActivity.class)
                 .putExtra(EXTRA_IS_COLLECTED, isCollected)
                 .putExtra(EXTRA_COLL_BOOK, collBook));
@@ -225,21 +233,6 @@ public class ReadActivity extends AppCompatActivity {
         isCollected = getIntent().getBooleanExtra(EXTRA_IS_COLLECTED, false);
         isNightMode = ReadSettingManager.getInstance().isNightMode();
         isFullScreen = ReadSettingManager.getInstance().isFullScreen();
-
-        if (mCollBook == null) {
-            mCollBook = new CollBookBean();
-            mCollBook.set_id("1");
-
-            List<BookChapterBean> bookChapters = new ArrayList<>();
-            for (int i = 0; i < 5; i++) {
-                BookChapterBean bookChapterBean = new BookChapterBean();
-                bookChapterBean.setTitle("他叫白小纯");
-                bookChapterBean.setLink("http://read.qidian.com/chapter/rJgN8tJ_cVdRGoWu-UQg7Q2/6jr-buLIUJSaGfXRMrUjdw2");
-                bookChapterBean.setBookId("1");
-                bookChapters.add(bookChapterBean);
-            }
-            mCollBook.setBookChapters(bookChapters);
-        }
 
         mBookId = mCollBook.get_id();
     }
@@ -391,6 +384,7 @@ public class ReadActivity extends AppCompatActivity {
                     @Override
                     public void requestChapters(List<TxtChapterBean> requestChapters) {
 //                        mPresenter.loadChapter(mBookId, requestChapters);
+                        finishChapter();
                         mHandler.sendEmptyMessage(WHAT_CATEGORY);
                         //隐藏提示
                         mTvPageTip.setVisibility(GONE);
@@ -661,6 +655,23 @@ public class ReadActivity extends AppCompatActivity {
 //            // 从网络中获取目录
 //            mPresenter.loadCategory(mBookId);
 //        }
+
+
+        String s = "{\"ok\":true,\"mixToc\":{\"_id\":\"5c2c76636540b6913e8e99a7\",\"book\":\"5c2c76636540b6913e8e99a7\",\"chapters\":[{\"title\":\"暂无版权\",\"link\":\"http://www.honeypot.com/xiaoshuo/410/402169/1.html\",\"unreadble\":false}],\"chaptersUpdated\":\"2019-05-05T15:40:18.809Z\",\"chaptersCount1\":1,\"updated\":\"2019-05-05T15:40:18.809Z\"}}";
+        Gson gson = new Gson();
+        ddd txtChapterBean = gson.fromJson(s, ddd.class);
+        List<ddd.MixTocBean.ChaptersBean> chapters = txtChapterBean.getMixToc().getChapters();
+        List<TxtChapterBean> bookChapters = new ArrayList<>(chapters.size());
+        for (ddd.MixTocBean.ChaptersBean c:chapters){
+            TxtChapterBean b = new TxtChapterBean();
+            b.setTitle(c.getTitle());
+            b.setLink(c.getLink());
+            b.setUnReadable(c.isUnreadble());
+            bookChapters.add(b);
+        }
+
+        showCategory(bookChapters);
+
     }
 
     /***************************view************************************/
@@ -671,8 +682,26 @@ public class ReadActivity extends AppCompatActivity {
     public void complete() {
 
     }
-
-    public void showCategory(List<BookChapterBean> bookChapters) {
+    /**
+     * 存储章节
+     * @param folderName
+     * @param fileName
+     * @param content
+     */
+    public void saveChapterInfo(String folderName,String fileName,String content){
+        File file = BookManager.getBookFile(folderName, fileName);
+        //获取流并存储
+        Writer writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(file));
+            writer.write(content);
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+            IOUtils.close(writer);
+        }
+    }
+    public void showCategory(List<TxtChapterBean> bookChapters) {
         mPageLoader.getCollBook().setBookChapters(bookChapters);
         mPageLoader.refreshChapterList();
 
@@ -681,7 +710,7 @@ public class ReadActivity extends AppCompatActivity {
 //            BookRepository.getInstance()
 //                    .saveBookChaptersWithAsync(bookChapters);
 //        }
-    }
+}
 
     public void finishChapter() {
         if (mPageLoader.getPageStatus() == BasePageLoader.STATUS_LOADING) {

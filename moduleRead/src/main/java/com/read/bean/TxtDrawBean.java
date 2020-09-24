@@ -9,6 +9,7 @@ import java.util.List;
 public class TxtDrawBean {
     public int position;
     public String title;
-    public int titleLines; //当前 lines 中为 title 的行数。
+    //当前 lines 中为 title 的行数。
+    public int titleLines;
     public  List<String> lines;
 }

@@ -3,18 +3,15 @@ package com.read.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
 import com.read.utils.StringUtils;
 
 import java.util.List;
 
+
 /**
- * 收藏的书籍
+ * 收藏的书籍，书本对象
  */
-@Entity
-public class CollBookBean implements Parcelable {
+public class BookBean implements Parcelable {
 
     public static final int STATUS_UNCACHE = 0; //未缓存
     public static final int STATUS_CACHING = 1; //正在缓存
@@ -33,12 +30,13 @@ public class CollBookBean implements Parcelable {
      * chaptersCount : 1660
      * lastChapter : 第1659章 朱长老
      */
-    @PrimaryKey
-    private String _id; // 本地书籍中，path 的 md5 值作为本地书籍的 id
+    // 本地书籍中，path 的 md5 值作为本地书籍的 id
+    private String _id;
     private String title;
     private String author;
     private String shortIntro;
-    private String cover; // 在本地书籍中，该字段作为本地文件的路径
+    // 在本地书籍中，该字段作为本地文件的路径
+    private String cover;
     private boolean hasCp;
     private int latelyFollower;
     private double retentionRatio;
@@ -53,18 +51,17 @@ public class CollBookBean implements Parcelable {
     //是否是本地文件
     private boolean isLocal = false;
 
-    //    @ToMany(referencedJoinProperty = "bookId")
-    private List<BookChapterBean> bookChapterList;
-//    /** Used to resolve relations */
-//    @Generated(hash = 2040040024)
-//    private transient DaoSession daoSession;
-//    /** Used for active entity operations. */
-//    @Generated(hash = 1552163441)
-//    private transient CollBookBeanDao myDao;
+    //章节
+    private List<TxtChapterBean> bookChapterList;
 
-    public CollBookBean(String _id, String title, String author, String shortIntro, String cover,
-                        boolean hasCp, int latelyFollower, double retentionRatio, String updated, String lastRead,
-                        int chaptersCount, String lastChapter, boolean isUpdate, boolean isLocal) {
+    //阅读到了第几章
+    private int chapter;
+    //当前的页码
+    private int pagePos;
+
+    public BookBean(String _id, String title, String author, String shortIntro, String cover,
+                    boolean hasCp, int latelyFollower, double retentionRatio, String updated, String lastRead,
+                    int chaptersCount, String lastChapter, boolean isUpdate, boolean isLocal) {
         this._id = _id;
         this.title = title;
         this.author = author;
@@ -81,7 +78,7 @@ public class CollBookBean implements Parcelable {
         this.isLocal = isLocal;
     }
 
-    public CollBookBean() {
+    public BookBean() {
     }
 
     public String get_id() {
@@ -208,14 +205,14 @@ public class CollBookBean implements Parcelable {
         this.lastRead = lastRead;
     }
 
-    public void setBookChapters(List<BookChapterBean> beans) {
+    public void setBookChapters(List<TxtChapterBean> beans) {
         bookChapterList = beans;
-        for (BookChapterBean bean : bookChapterList) {
+        for (TxtChapterBean bean : bookChapterList) {
             bean.setBookId(get_id());
         }
     }
 
-    public List<BookChapterBean> getBookChapters() {
+    public List<TxtChapterBean> getBookChapters() {
         return bookChapterList;
     }
 
@@ -226,6 +223,22 @@ public class CollBookBean implements Parcelable {
 
     public void setIsLocal(boolean isLocal) {
         this.isLocal = isLocal;
+    }
+
+    public int getChapter() {
+        return chapter;
+    }
+
+    public void setChapter(int chapter) {
+        this.chapter = chapter;
+    }
+
+    public int getPagePos() {
+        return pagePos;
+    }
+
+    public void setPagePos(int pagePos) {
+        this.pagePos = pagePos;
     }
 
     @Override
@@ -251,7 +264,7 @@ public class CollBookBean implements Parcelable {
         dest.writeByte(this.isLocal ? (byte) 1 : (byte) 0);
     }
 
-    protected CollBookBean(Parcel in) {
+    protected BookBean(Parcel in) {
         this._id = in.readString();
         this.title = in.readString();
         this.author = in.readString();
@@ -268,15 +281,15 @@ public class CollBookBean implements Parcelable {
         this.isLocal = in.readByte() != 0;
     }
 
-    public static final Creator<CollBookBean> CREATOR = new Creator<CollBookBean>() {
+    public static final Creator<BookBean> CREATOR = new Creator<BookBean>() {
         @Override
-        public CollBookBean createFromParcel(Parcel source) {
-            return new CollBookBean(source);
+        public BookBean createFromParcel(Parcel source) {
+            return new BookBean(source);
         }
 
         @Override
-        public CollBookBean[] newArray(int size) {
-            return new CollBookBean[size];
+        public BookBean[] newArray(int size) {
+            return new BookBean[size];
         }
     };
 }

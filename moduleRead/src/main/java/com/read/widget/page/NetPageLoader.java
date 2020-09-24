@@ -1,7 +1,6 @@
 package com.read.widget.page;
 
-import com.read.bean.BookChapterBean;
-import com.read.bean.CollBookBean;
+import com.read.bean.BookBean;
 import com.read.bean.TxtChapterBean;
 import com.read.utils.BookManager;
 import com.read.utils.Constant;
@@ -24,28 +23,18 @@ import java.util.List;
 public class NetPageLoader extends BasePageLoader {
     private static final String TAG = "PageFactory";
 
-    public NetPageLoader(PageView pageView, CollBookBean collBook) {
+    public NetPageLoader(PageView pageView, BookBean collBook) {
         super(pageView, collBook);
     }
 
-    private List<TxtChapterBean> convertTxtChapter(List<BookChapterBean> bookChapters) {
-        List<TxtChapterBean> txtChapterBeans = new ArrayList<>(bookChapters.size());
-        for (BookChapterBean bean : bookChapters) {
-            TxtChapterBean chapter = new TxtChapterBean();
-            chapter.bookId = bean.getBookId();
-            chapter.title = bean.getTitle();
-            chapter.link = bean.getLink();
-            txtChapterBeans.add(chapter);
-        }
-        return txtChapterBeans;
-    }
 
     @Override
     public void refreshChapterList() {
-        if (mCollBook.getBookChapters() == null) return;
-
+        if (mCollBook.getBookChapters() == null) {
+            return;
+        }
         // 将 BookChapter 转换成当前可用的 Chapter
-        mChapterList = convertTxtChapter(mCollBook.getBookChapters());
+        mChapterList = mCollBook.getBookChapters();
         isChapterListPrepare = true;
 
         // 目录加载完成，执行回调操作。
@@ -64,7 +53,9 @@ public class NetPageLoader extends BasePageLoader {
     protected BufferedReader getChapterReader(TxtChapterBean chapter) throws Exception {
         File file = new File(Constant.BOOK_CACHE_PATH + mCollBook.get_id()
                 + File.separator + chapter.title + FileUtils.SUFFIX_NB);
-        if (!file.exists()) return null;
+        if (!file.exists()) {
+            return null;
+        }
 
         Reader reader = new FileReader(file);
         BufferedReader br = new BufferedReader(reader);
@@ -209,16 +200,13 @@ public class NetPageLoader extends BasePageLoader {
 
     @Override
     public void saveRecord() {
-        super.saveRecord();
         if (mCollBook != null && isChapterListPrepare) {
             //表示当前CollBook已经阅读
             mCollBook.setIsUpdate(false);
             mCollBook.setLastRead(StringUtils.
                     dateConvert(System.currentTimeMillis(), Constant.FORMAT_BOOK_DATE));
-            //直接更新 TODO:数据库保存记录
-//            BookRepository.getInstance()
-//                    .saveCollBook(mCollBook);
         }
+        super.saveRecord();
     }
 }
 

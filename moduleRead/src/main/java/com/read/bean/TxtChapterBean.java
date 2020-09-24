@@ -7,7 +7,7 @@ package com.read.bean;
 public class TxtChapterBean {
 
     //章节所属的小说(网络)
-    public  String bookId;
+    public   String bookId;
     //章节的链接(网络)
     public String link;
 
@@ -18,6 +18,11 @@ public class TxtChapterBean {
     public long start;
     //章节内容在文章中的终止位置(本地)
     public  long end;
+
+    //所属的下载任务
+    private String taskName;
+
+    private boolean unReadable;
 
     public String getBookId() {
         return bookId;
@@ -57,6 +62,22 @@ public class TxtChapterBean {
 
     public void setEnd(long end) {
         this.end = end;
+    }
+
+    public boolean isUnReadable() {
+        return unReadable;
+    }
+
+    public void setUnReadable(boolean unReadable) {
+        this.unReadable = unReadable;
+    }
+
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 
     @Override
