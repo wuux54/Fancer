@@ -3,10 +3,9 @@ package player.media.custom;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,11 +18,18 @@ import android.widget.MediaController;
 
 import androidx.annotation.NonNull;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import io.reactivex.Single;
+import io.reactivex.SingleObserver;
+import io.reactivex.SingleOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import player.listener.VideoViewListener;
 import player.media.ijk.IMediaController;
 import player.media.ijk.IMediaPlayInfoListener;
@@ -64,7 +70,7 @@ public class IjkMpVideoView extends FrameLayout implements MediaController.Media
     private boolean isRight;
 
     private FFmpegMediaMetadataRetriever retriever;
-    private long lastSetTime = 0;
+    private CompositeDisposable retrieverDisposable;
 
     public void setVideoViewListener(VideoViewListener videoViewListener) {
         this.videoViewListener = videoViewListener;
@@ -315,6 +321,7 @@ public class IjkMpVideoView extends FrameLayout implements MediaController.Media
         invalidate();
     }
 
+
     /**
      * 获取视频帧图片
      *
@@ -324,22 +331,56 @@ public class IjkMpVideoView extends FrameLayout implements MediaController.Media
         if (retriever == null) {
             return;
         }
-        long currTime = System.currentTimeMillis();
-        if (currTime - lastSetTime < 800) {
-            return;
+//        long currTime = System.currentTimeMillis();
+//        if (currTime - lastSetTime < 800) {
+//            return;
+//        }
+//        lastSetTime = currTime;
+//        new Thread(() -> {
+//            try {
+//                //Bitmap b = mmr.getFrameAtTime(time);
+//                Bitmap b = retriever.getFrameAtTime(time);
+//                new Handler(Looper.getMainLooper()).post(()
+//                        -> ivBitmap.setImageBitmap(b));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }).start();
+        if (retrieverDisposable == null) {
+            retrieverDisposable=new CompositeDisposable();
         }
-        lastSetTime = currTime;
-        new Thread(() -> {
-            try {
-                //Bitmap b = mmr.getFrameAtTime(time);
-                Bitmap b = retriever.getFrameAtTime(time);
-                new Handler(Looper.getMainLooper()).post(()
-                        -> ivBitmap.setImageBitmap(b));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
 
+
+        Single.create((SingleOnSubscribe<Bitmap>) emitter
+                -> {
+            Bitmap frameAtTime = retriever.getFrameAtTime(time);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            frameAtTime.compress(Bitmap.CompressFormat.JPEG, 1, bos);
+
+            Matrix matrix = new Matrix();
+            matrix.setScale(0.5f, 0.5f);
+
+            emitter.onSuccess(Bitmap.createBitmap(frameAtTime, 0, 0, frameAtTime.getWidth(),
+                    frameAtTime.getHeight(), matrix, true));
+        })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Bitmap>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        retrieverDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(Bitmap b) {
+                        ivBitmap.setImageBitmap(b);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+                });
     }
 
     public void setMediaController(IMediaController controller) {
@@ -606,9 +647,15 @@ public class IjkMpVideoView extends FrameLayout implements MediaController.Media
 
     public void releaseMedia() {
         ijkMpController.releaseMedia();
+        ijkMpController = null;
         if (retriever != null) {
             retriever.release();
         }
+        if (retrieverDisposable != null) {
+            retrieverDisposable.clear();
+            retrieverDisposable = null;
+        }
+
     }
 
 

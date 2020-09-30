@@ -1,6 +1,6 @@
 ext {
 
-    isModule = false
+    isModule = true
 
     defConfig = [
             compileSdkVersion: 29,
@@ -15,7 +15,7 @@ ext {
             "app"       : "com.fancer",
             "moduleBase": "com.fancer.base",
             "player"    : "com.fancer.player",
-            "moduleRead"    : "com.fancer.read",
+            "read"      : "com.fancer.read",
     ]
 
     // dragged

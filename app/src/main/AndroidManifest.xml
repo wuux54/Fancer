@@ -34,7 +34,6 @@
 
         <activity android:name=".demo.TestActivity" />
         <activity android:name=".mvvm.ui.activity.VrMainActivity" />
-        <activity android:name="player.vrplayer.vr.IjkPlayerDemoActivity" />
         <activity android:name=".mvvm.ui.activity.BookMainActivity" />
     </application>
 

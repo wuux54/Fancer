@@ -49,10 +49,11 @@ abstract class BaseActivity<model : BaseModel, vm : BaseVm<model>, B : ViewDataB
         viewDataBinding = DataBindingUtil.setContentView(this, layoutRes)
         viewDataBinding.setVariable(BR.vm, viewModel)
 
-        bindVm()
+        dataBindVariable()
         viewHeaderSet()
         init()
         initEvent()
+        goProcess()
     }
 
     fun getDataBinding() = viewDataBinding
@@ -78,11 +79,13 @@ abstract class BaseActivity<model : BaseModel, vm : BaseVm<model>, B : ViewDataB
 
     abstract fun inject()
 
-    abstract fun bindVm()
+    abstract fun dataBindVariable()
 
     abstract fun init()
 
     abstract fun initEvent()
+
+    abstract fun goProcess()
 
     override fun onDestroy() {
         super.onDestroy()

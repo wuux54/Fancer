@@ -4,7 +4,7 @@ import android.util.Log;
 
 import androidx.multidex.MultiDexApplication;
 
-import com.read.utils.FileUtils;
+import com.read.utils.BookFileUtils;
 import com.read.utils.SharedPreUtils;
 import com.read.utils.StringUtils;
 
@@ -28,7 +28,7 @@ public class MyApplication extends MultiDexApplication {
         ToastUtil.setApplication(this);
         SharedPreUtils.setApplication(this);
         StringUtils.setApp(this);
-        FileUtils.setApp(this);
+        BookFileUtils.setApp(this);
         LogUtils.setLevel(Log.VERBOSE);
 
 

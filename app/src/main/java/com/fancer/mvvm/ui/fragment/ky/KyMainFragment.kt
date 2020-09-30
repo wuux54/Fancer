@@ -25,6 +25,8 @@ import kotlinx.android.synthetic.main.fragment_ky_main.*
  * @Desc：父容器页面
  */
 class KyMainFragment : BaseFragment(R.layout.fragment_ky_main) {
+    override fun goProcess() {
+    }
 
 
     override fun init() {

@@ -49,7 +49,7 @@ abstract class BaseNetFragment<model : BaseModel, vm : BaseVm<model>, B : ViewDa
         viewDataBinding.lifecycleOwner = this
         viewDataBinding.setVariable(BR.vm, viewModel)
 
-        bindVm()
+        dataBindVariable()
         return viewDataBinding.root
     }
 
@@ -62,7 +62,7 @@ abstract class BaseNetFragment<model : BaseModel, vm : BaseVm<model>, B : ViewDa
 
     abstract fun inject()
 
-    abstract fun bindVm()
+    abstract fun dataBindVariable()
 
     fun getDataBinding(): B = viewDataBinding
 

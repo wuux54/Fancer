@@ -7,6 +7,10 @@
             name="vm"
             type="com.fancer.mvvm.vm.MainVm" />
 
+        <variable
+            name="clickProxy"
+            type="com.fancer.mvvm.ui.activity.MainActivity" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,12 +31,30 @@
 
 
         <Button
-            android:id="@+id/bt"
-            android:layout_width="@dimen/dp_50"
+            android:id="@+id/btn_ky"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dp_50"
-            android:onClick="@{()->vm.btnClick()}"
-            android:text="dddd"
+            android:onClick="@{clickProxy::clickView}"
+            android:text="开眼视频"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_read"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_50"
+            android:onClick="@{clickProxy::clickView}"
+            android:text="阅读"
+            app:layout_constraintLeft_toRightOf="@id/btn_ky"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_vr"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_50"
+            android:onClick="@{clickProxy::clickView}"
+            android:text="V R"
+            app:layout_constraintLeft_toRightOf="@id/btn_read"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

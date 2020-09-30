@@ -17,6 +17,9 @@ import kotlinx.android.synthetic.main.fragment_vr_video.*
  */
 
 class VrVideoFragment : BaseFragment(R.layout.fragment_vr_video) {
+    override fun goProcess() {
+    }
+
     override fun init() {
         val url = arguments?.getString("video")
 

@@ -34,7 +34,10 @@ class KyMineFragment : BaseNetFragment<KyMineModel,KyMineVm, FragmentKyMineBindi
         dagger.inject(viewModel)
     }
 
-    override fun bindVm() {
+    override fun dataBindVariable() {
+    }
+
+    override fun goProcess() {
     }
 
     override fun init() {

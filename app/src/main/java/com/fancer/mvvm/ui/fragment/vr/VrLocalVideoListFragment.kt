@@ -42,6 +42,9 @@ class VrLocalVideoListFragment : BaseFragment(R.layout.fragment_vr_local) {
         Manifest.permission.READ_EXTERNAL_STORAGE
     )
     var wxPermissionManager: WxPermissionManager? = null
+    override fun goProcess() {
+    }
+
     override fun init() {
         vrLocalVideoAdapter = VrLocalVideoAdapter(mContext)
         rv_list.adapter = vrLocalVideoAdapter

@@ -51,7 +51,7 @@ class KyHomeFragment :
         dagger.inject(viewModel)
     }
 
-    override fun bindVm() {
+    override fun dataBindVariable() {
         getDataBinding().setVariable(BR.clickProxy, this)
     }
 
@@ -149,6 +149,9 @@ class KyHomeFragment :
     override fun hideLoad() {
         super.hideLoad()
         refresh.finishRefresh()
+    }
+
+    override fun goProcess() {
     }
 
 

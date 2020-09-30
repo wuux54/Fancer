@@ -25,8 +25,8 @@ import kotlinx.android.synthetic.main.fragment_ky_main.*
  * @Desc：父容器页面
  */
 class BookMainFragment : BaseFragment(R.layout.fragment_book_main) {
-
-
+    override fun goProcess() {
+    }
     override fun init() {
         val fragmentList: Array<Fragment> = Array(3) {
             BookReadFragment()

@@ -36,8 +36,12 @@ class KyVideoFragment :
         dagger.inject(viewModel)
     }
 
-    override fun bindVm() {
+    override fun dataBindVariable() {
     }
+
+    override fun goProcess() {
+    }
+
     var url=""
     override fun init() {
         val data: KYHome.ItemListBean.DataBean = arguments?.get("video") as KYHome.ItemListBean.DataBean

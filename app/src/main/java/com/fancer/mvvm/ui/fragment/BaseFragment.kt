@@ -43,7 +43,10 @@ abstract class BaseFragment(@LayoutRes private val layoutId: Int) :
         viewHeaderSet()
         init()
         initEvent()
+        goProcess()
     }
+
+    abstract fun goProcess()
 
     open fun viewHeaderSet() {
         val viewHeader = viewHeader() ?: return
