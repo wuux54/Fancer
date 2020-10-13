@@ -1,11 +1,14 @@
 package com.fancer
 
+import android.app.Activity
+import android.os.Bundle
 import android.util.Log
 import android.util.Log.VERBOSE
 import androidx.multidex.MultiDexApplication
 import app.config.AppConfig
 import app.util.LogUtils
 import app.util.ToastUtil
+import com.fancer.utils.LanguageUtils
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -51,31 +54,39 @@ class MainApplication : MultiDexApplication() {
         appContext = this
         LogUtils.setLevel(if (AppConfig.DEBUG) VERBOSE else Log.ERROR)
         ToastUtil.setApplication(appContext)
-
+        registerActivityLifecycleCallbacks(activityLifecycle)
         //TODO: 创建全局ViewModel 作为全局公用数据
     }
 
+    private val activityLifecycle = object : ActivityLifecycleCallbacks {
+        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+            if (!LanguageUtils.isSameWithSetting(activity)) {
+                LanguageUtils.changeAppLanguage(
+                    activity,
+                    LanguageUtils.getLocaleLanguage(activity)
+                    , true
+                )
+            }
+        }
 
-//    fun getAppViewModelProvider(activity: Activity): ViewModelProvider? {
-//        return ViewModelProvider(
-//            activity.applicationContext as com.kunminx.puremusic.App,
-//            (activity.applicationContext as com.kunminx.puremusic.App).getAppFactory(activity)
-//        )
-//    }
-//
-//    private fun getAppFactory(activity: Activity): ViewModelProvider.Factory? {
-//        val application = checkApplication(activity)
-//        if (mFactory == null) {
-//            mFactory = ViewModelProvider.AndroidViewModelFactory.getInstance(application)
-//        }
-//        return mFactory
-//    }
-//
-//    private fun checkApplication(activity: Activity): Application {
-//        return activity.application
-//            ?: throw IllegalStateException(
-//                "Your activity/fragment is not yet attached to "
-//                        + "Application. You can't request ViewModel before onCreate call."
-//            )
-//    }
+        override fun onActivityPaused(activity: Activity) {
+        }
+
+        override fun onActivityStarted(activity: Activity) {
+        }
+
+        override fun onActivityDestroyed(activity: Activity) {
+        }
+
+        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+        }
+
+        override fun onActivityStopped(activity: Activity) {
+        }
+
+
+        override fun onActivityResumed(activity: Activity) {
+        }
+    }
+
 }

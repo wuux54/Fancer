@@ -111,7 +111,12 @@ class KyHomeFragment :
                 }.toMutableList())
             }
 
-            urlNext = it.nextPageUrl
+            if (it.nextPageUrl == null) {
+                refresh.finishLoadMore(1,true,true)
+
+            } else {
+                urlNext = it.nextPageUrl
+            }
             hideLoad()
         })
 

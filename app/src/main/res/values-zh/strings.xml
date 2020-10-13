@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Fancer-zh</string>
+
+    <string name="ky_app_name">开眼-zh</string>
+    <string name="follow">关注-zh</string>
+    <string name="media">媒体-zh</string>
+    <string name="home">主页-zh</string>
+
+    <string name="tipsLoadProgress">正在加载-zh</string>
+    <string name="tipsLoadFail">加载失败-zh</string>
+    <string name="tipsLoadSuccess">加载成功-zh</string>
+
+    <string name="itemImgBg">条目背景图-zh</string>
+    <string name="btnKY">开眼视频-zh</string>
+    <string name="btnRead">阅读-zh</string>
+    <string name="btnVr">V R -zh</string>
+
+
+    <string name="btnZh">中文</string>
+    <string name="btnEn">英文</string>
+    <string name="btnAr">阿拉伯语</string>
+</resources>

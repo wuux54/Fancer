@@ -8,13 +8,17 @@ import com.fancer.dragger.icomponent.DaggerMainComponent_MainActivityComponent
 import com.fancer.dragger.module.MainActivityModule
 import com.fancer.mvvm.model.MainModel
 import com.fancer.mvvm.vm.MainVm
+import com.fancer.utils.LanguageUtils
 import com.google.gson.Gson
 import read.ReadActivity
 import read.bean.BookDetailBean
 import read.utils.BookFileUtils
 import read.utils.SharedPreUtils
 import read.utils.StringUtils
-class MainActivity : BaseActivity<MainModel, MainVm, ActivityMainBinding>(R.layout.activity_main){
+import java.util.*
+
+
+class MainActivity : BaseActivity<MainModel, MainVm, ActivityMainBinding>(R.layout.activity_main) {
     override fun inject() {
         val mainActivityComponent =
             DaggerMainComponent_MainActivityComponent.builder()
@@ -66,7 +70,24 @@ class MainActivity : BaseActivity<MainModel, MainVm, ActivityMainBinding>(R.layo
             R.id.btn_vr -> {
                 startActivity(Intent(this, VrMainActivity::class.java))
             }
+
+            R.id.btn_language_ar -> {
+                updLanguage(Locale("ar","EG"))
+            }
+            R.id.btn_language_en -> {
+                updLanguage(Locale.ENGLISH)
+            }
+            R.id.btn_language_zh -> {
+                updLanguage(Locale.SIMPLIFIED_CHINESE)
+            }
         }
+    }
+
+    private fun updLanguage(locale:Locale) {
+        LanguageUtils.changeAppLanguage(this,locale , true)
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 
     override fun goProcess() {

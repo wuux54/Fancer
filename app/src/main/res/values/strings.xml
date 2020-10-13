@@ -11,4 +11,12 @@
     <string name="tipsLoadSuccess">加载成功</string>
 
     <string name="itemImgBg">条目背景图</string>
+
+    <string name="btnKY">开眼视频</string>
+    <string name="btnRead">阅读</string>
+    <string name="btnVr">V R</string>
+
+    <string name="btnZh">中文</string>
+    <string name="btnEn">英文</string>
+    <string name="btnAr">阿拉伯语</string>
 </resources>
